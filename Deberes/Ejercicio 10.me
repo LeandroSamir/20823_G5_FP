@@ -1,0 +1,30 @@
+Proceso primos_sin_funcion
+    Definir A, B, num, i, contador, aux Como Entero
+
+    Escribir "Ingrese el primer número:"
+    Leer A
+
+    Escribir "Ingrese el segundo número:"
+    Leer B
+
+    // Intercambiar si A > B
+    Si A > B Entonces
+        aux <- A
+        A <- B
+        B <- aux
+    FinSi
+
+    Para num <- A Hasta B Hacer
+        contador <- 0
+
+        Para i <- 1 Hasta num Hacer
+            Si num MOD i = 0 Entonces
+                contador <- contador + 1
+            FinSi
+        FinPara
+
+        Si contador = 2 Entonces
+            Escribir num, " es primo"
+        FinSi
+    FinPara
+FinProceso
