@@ -1,1 +1,14 @@
+#include <stdio.h>
+#include "ejercicios.h"
 
+void ejercicio4() {
+	float x;
+	printf("Ingrese un numero: ");
+	scanf("%f",&x);
+	if ((x>0) && (x<=10)) {
+		printf("El numero ingresado pertenece al intervalo (0 , 10]");
+	}
+	else {
+		printf("El numero ingresado no pertenece al intervalo (0 , 10]");
+	}
+}
