@@ -1,0 +1,32 @@
+#include <stdio.h>
+#include "ejercicios.h"
+
+void ejercicio9() {
+    int a, b, i, j, esPrimo;
+
+    do {
+        printf("Ingrese el primer numero (menor): ");
+        scanf("%d", &a);
+        printf("Ingrese el segundo numero (mayor): ");
+        scanf("%d", &b);
+    } while (a >= b);  // Validar que a sea menor que b
+
+    i = a;
+    do {
+        if (i > 1) {
+            esPrimo = 1;
+            for (j = 2; j <= i / 2; j++) {
+                if (i % j == 0) {
+                    esPrimo = 0;
+                    break;
+                }
+            }
+            if (esPrimo) {
+                printf("%d ", i);
+            }
+        }
+        i++;
+    } while (i <= b);
+
+    printf("\n");
+}
