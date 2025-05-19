@@ -1,0 +1,22 @@
+#include <stdio.h>
+#include "ejercicios.h"
+
+void ejercicio3() {
+    int x, y;
+
+    printf("Ingrese el primer numero (x): ");
+    scanf("%d", &x);
+
+    printf("Ingrese el segundo numero (y): ");
+    scanf("%d", &y);
+
+    if (y != 0) {
+        if (x % y == 0) {
+            printf("%d es divisible por %d.\n", x, y);
+        } else {
+            printf("%d NO es divisible por %d.\n", x, y);
+        }
+    } else {
+        printf("Error: no se puede dividir entre cero.\n");
+    }
+}
