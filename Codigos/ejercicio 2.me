@@ -1,0 +1,14 @@
+#include <stdio.h>
+#include "ejercicios.h"
+#include <math.h>
+
+void ejercicio2() {
+    double X, resultado;
+
+    printf("Ingrese un numero real X: ");
+    scanf("%lf", &X);
+
+    resultado = fabs(pow(X, 3)); // pow(X, 3) calcula X al cubo y fabs() obtiene el valor absoluto
+
+    printf("El valor absoluto de X al cubo es: %.2f\n", resultado);
+}
