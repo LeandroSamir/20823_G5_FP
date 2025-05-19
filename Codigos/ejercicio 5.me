@@ -1,0 +1,21 @@
+#include <stdio.h>
+#include "ejercicios.h"
+
+void ejercicio5() {
+    int x, horasr, minr, diast, horast, mint, segt;
+
+    printf("Ingrese la cantidad de segundos: ");
+    scanf("%i", &x);
+
+    diast = x / (24 * 60 * 60);
+    horasr = x % (24 * 60 * 60);
+
+    horast = horasr / (60 * 60);
+    minr = horasr % (60 * 60);
+
+    mint = minr / 60;
+    segt = minr % 60;
+
+    printf("El evento dura %i dias, %i horas, %i minutos y %i segundos.\n",
+           diast, horast, mint, segt);
+       }
