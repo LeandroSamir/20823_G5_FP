@@ -1,0 +1,14 @@
+Algoritmo Convertidor
+	
+	Definir x, horasr, minr como Entero
+	Definir diast, horast, mint, segt como Real
+	Escribir "Ingrese la cantidad de segundos"
+	Leer x
+	diast=x/(24*60*60)
+	horasr=x%(24*60*60)
+	horast=horasr/(60*60)
+	minr=horasr%(60*60)
+	mint=minr/60
+	segt=minr%60
+	Escribir "El evento dura ", Trunc(diast), " dias, ", Trunc(horast), " horas, ", Trunc(mint), " minutos y ", Trunc(segt), " segundos."
+FinAlgoritmo
