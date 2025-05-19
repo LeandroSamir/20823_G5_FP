@@ -1,0 +1,36 @@
+#include <stdio.h>
+#include "ejercicios.h"
+
+void ejercicio7() {
+    float x, media, min, max, suma = 0;
+    int divisor = 0;
+
+    printf("Ingrese una altura: ");
+    scanf("%f", &x);
+
+    min = x;
+    max = x;
+
+    while (x >= 0) {
+        suma += x;
+        divisor++;
+
+        if (x < min) {
+            min = x;
+        }
+
+        if (x > max) {
+            max = x;
+        }
+
+        printf("Ingrese otra altura: ");
+        scanf("%f", &x);
+    }
+
+    if (divisor == 0) {
+        printf("No se ingresaron alturas validas.\n");
+    } else {
+        media = suma / divisor;
+        printf("La media es %.2f, el minimo es %.2f, el maximo es %.2f\n", media, min, max);
+    }
+}
