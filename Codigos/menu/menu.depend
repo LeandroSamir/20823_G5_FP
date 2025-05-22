@@ -1,0 +1,85 @@
+# depslib dependency file v1.0
+1747621346 source:c:\users\chuck\onedrive\espe\proyecto de programacion\ejercicio1.c
+	<stdio.h>
+	"ejercicios.h"
+
+1747625406 c:\users\chuck\onedrive\espe\proyecto de programacion\ejercicios.h
+
+1747612940 source:c:\users\chuck\onedrive\espe\proyecto de programacion\ejercicio10.c
+	<stdio.h>
+	"ejercicios.h"
+
+1747610464 source:c:\users\chuck\onedrive\espe\proyecto de programacion\ejercicio11.c
+	<stdio.h>
+	"ejercicios.h"
+
+1747624018 source:c:\users\chuck\onedrive\espe\proyecto de programacion\ejercicio12.c
+	<stdio.h>
+	"ejercicios.h"
+
+1747610462 source:c:\users\chuck\onedrive\espe\proyecto de programacion\ejercicio13.c
+	<stdio.h>
+	"ejercicios.h"
+
+1747610462 source:c:\users\chuck\onedrive\espe\proyecto de programacion\ejercicio14.c
+	<stdio.h>
+	"ejercicios.h"
+
+1747624008 source:c:\users\chuck\onedrive\espe\proyecto de programacion\ejercicio15.c
+	<stdio.h>
+	"ejercicios.h"
+
+1747624108 source:c:\users\chuck\onedrive\espe\proyecto de programacion\ejercicio16.c
+	<stdio.h>
+	"ejercicios.h"
+
+1747624210 source:c:\users\chuck\onedrive\espe\proyecto de programacion\ejercicio17.c
+	<stdio.h>
+	"ejercicios.h"
+
+1747610464 source:c:\users\chuck\onedrive\espe\proyecto de programacion\ejercicio18.c
+	<stdio.h>
+	"ejercicios.h"
+
+1747610464 source:c:\users\chuck\onedrive\espe\proyecto de programacion\ejercicio19.c
+	<stdio.h>
+	<string.h>
+	"ejercicios.h"
+
+1747622560 source:c:\users\chuck\onedrive\espe\proyecto de programacion\ejercicio2.c
+	<stdio.h>
+	"ejercicios.h"
+	<math.h>
+
+1747610464 source:c:\users\chuck\onedrive\espe\proyecto de programacion\ejercicio20.c
+	<stdio.h>
+	"ejercicios.h"
+
+1747621346 source:c:\users\chuck\onedrive\espe\proyecto de programacion\ejercicio3.c
+	<stdio.h>
+	"ejercicios.h"
+
+1747610464 source:c:\users\chuck\onedrive\espe\proyecto de programacion\ejercicio4.c
+	<stdio.h>
+	"ejercicios.h"
+
+1747612964 source:c:\users\chuck\onedrive\espe\proyecto de programacion\ejercicio5.c
+	<stdio.h>
+	"ejercicios.h"
+
+1747610464 source:c:\users\chuck\onedrive\espe\proyecto de programacion\ejercicio6.c
+	<stdio.h>
+	"ejercicios.h"
+
+1747610464 source:c:\users\chuck\onedrive\espe\proyecto de programacion\ejercicio7.c
+	<stdio.h>
+	"ejercicios.h"
+
+1747610462 source:c:\users\chuck\onedrive\espe\proyecto de programacion\ejercicio8.c
+	<stdio.h>
+	"ejercicios.h"
+
+1747610462 source:c:\users\chuck\onedrive\espe\proyecto de programacion\ejercicio9.c
+	<stdio.h>
+	"ejercicios.h"
+
