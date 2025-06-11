@@ -2,10 +2,9 @@
 
 #define MAX_FILAS 100
 #define MAX_COLUMNAS 100
-#define main
 
     // RF1:El Programa debe definir a la Matriz con filas y columnas como enteros
-intmain() {
+int main() {
     int matriz[MAX_FILAS][MAX_COLUMNAS];
     int filas, columnas, i, j, filaSeleccionada;
     int maximo;
