@@ -1,0 +1,80 @@
+#include <stdio.h>
+
+// RF1: Solicitar el tamaño de la matriz cuadrada
+int ingresarTamano() {
+    int n;
+    printf("Introduce el tamano de la matriz (n x n): ");
+    scanf("%d", &n);
+    return n;
+}
+
+// RF2: Llenar la matriz con valores secuenciales
+void llenarMatriz(int n, int matriz[n][n]) {
+    int valor = 1;
+    for (int i = 0; i < n; i++) {
+        for (int j = 0; j < n; j++) {
+            matriz[i][j] = valor++;
+        }
+    }
+}
+
+// RF3: Mostrar la matriz
+void mostrarMatriz(int n, int matriz[n][n]) {
+    for (int r = 0; r < n; r++) {
+        for (int c = 0; c < n; c++) {
+            printf("%4d", matriz[r][c]);
+        }
+        printf("\n");
+    }
+}
+
+// RF4: Solicitar las filas a intercambiar y validar índices
+int ingresarFilas(int n, int *fila1, int *fila2) {
+    printf("\nIntroduce los numeros de las dos filas a intercambiar (0 a %d): ", n - 1);
+    scanf("%d %d", fila1, fila2);
+
+    if (*fila1 < 0 || *fila1 >= n || *fila2 < 0 || *fila2 >= n) {
+        printf("Fuera de rango.\n");
+        return 0; // Error
+    }
+    return 1; // Correcto
+}
+
+// RF5: Intercambiar las filas i y j
+void intercambiarFilas(int n, int matriz[n][n], int i, int j) {
+    for (int k = 0; k < n; k++) {
+        int aux = matriz[i][k];
+        matriz[i][k] = matriz[j][k];
+        matriz[j][k] = aux;
+    }
+}
+
+int main() {
+    // RF1
+    int n = ingresarTamano();
+
+    int matriz[n][n];
+
+    // RF2
+    llenarMatriz(n, matriz);
+
+    // RF3
+    printf("\nMatriz original:\n");
+    mostrarMatriz(n, matriz);
+
+    int fila1, fila2;
+
+    // RF4
+    if (!ingresarFilas(n, &fila1, &fila2)) {
+        return 1;
+    }
+
+    // RF5
+    intercambiarFilas(n, matriz, fila1, fila2);
+
+    // RF6
+    printf("\nMatriz despues de intercambiar las filas %d y %d:\n", fila1, fila2);
+    mostrarMatriz(n, matriz);
+
+    return 0;
+}
