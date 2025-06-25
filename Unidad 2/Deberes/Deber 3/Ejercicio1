@@ -1,0 +1,37 @@
+#include <stdio.h>
+
+// Declaración de la función
+void llenarMatrizInversa(int n, int matriz[n][n]);
+
+int main() {
+    int n;
+    // Solicitar el tamaño de la matriz cuadrada
+    printf("Ingrese el tamano de la matriz cuadrada (n x n): ");
+    scanf("%d", &n);
+
+    int matriz[n][n];
+
+    // Llenar la matriz usando una función
+    llenarMatrizInversa(n, matriz);
+
+    // Imprimir la matriz
+    printf("\nMatriz generada automáticamente (orden inverso):\n");
+    for (int i = 0; i < n; i++) {
+        for (int j = 0; j < n; j++) {
+            printf("%d\t", matriz[i][j]);
+        }
+        printf("\n");
+    }
+
+    return 0;
+}
+
+// Funcion para llenar la matriz en orden inverso
+void llenarMatrizInversa(int n, int matriz[n][n]) {
+    int contador = 1;
+    for (int i = n - 1; i >= 0; i--) {
+        for (int j = n - 1; j >= 0; j--) {
+            matriz[i][j] = contador++;
+        }
+    }
+}
