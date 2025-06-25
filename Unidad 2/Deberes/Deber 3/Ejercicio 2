@@ -1,0 +1,87 @@
+#include <stdio.h>
+
+// Prototipos de funciones
+// RF1 + RF2: Permitir ingresar y validar el tamaño N de la matriz
+int ingresarTamano();
+
+// RF3: Permitir ingresar los elementos de la matriz
+void ingresarMatriz(int N, int matriz[N][N]);
+
+// RF4 + RF5: Permitir ingresar y validar el número de fila a analizar
+int ingresarFila(int N);
+
+// RF6: Calcular el valor máximo en la fila indicada
+int calcularMaximo(int N, int matriz[N][N], int fila);
+
+int main() {
+    // RF1 + RF2
+    int N = ingresarTamano();
+    if (N <= 0) {
+        return 1; // Salir si el tamaño es inválido
+    }
+
+    int matriz[N][N];
+
+    // RF3
+    ingresarMatriz(N, matriz);
+
+    // RF4 + RF5
+    int fila = ingresarFila(N);
+    if (fila == -1) {
+        return 1; // Salir si la fila es inválida
+    }
+
+    // RF6
+    int max = calcularMaximo(N, matriz, fila);
+
+    // RF7: Mostrar resultado
+    printf("El valor maximo en la fila %d es: %d\n", fila, max);
+
+    return 0;
+}
+
+// RF1 + RF2: Función para ingresar el tamaño de la matriz y validar que sea positivo
+int ingresarTamano() {
+    int N;
+    printf("Ingrese el tamano N de la matriz (NxN): ");
+    scanf("%d", &N);
+    if (N <= 0) {
+        printf("El tamano debe ser un numero entero positivo.\n");
+    }
+    return N;
+}
+
+// RF3: Función para ingresar los elementos de la matriz
+void ingresarMatriz(int N, int matriz[N][N]) {
+    printf("Ingrese los valores enteros de la matriz (%d x %d):\n", N, N);
+    for (int i = 0; i < N; i++) {
+        for (int j = 0; j < N; j++) {
+            printf("Elemento [%d][%d]: ", i, j);
+            scanf("%d", &matriz[i][j]);
+        }
+    }
+}
+
+// RF4 + RF5: Función para ingresar el número de fila y validar que esté dentro del rango válido
+int ingresarFila(int N) {
+    int fila;
+    printf("Ingrese el numero de la fila a analizar (0 a %d): ", N - 1);
+    scanf("%d", &fila);
+
+    if (fila < 0 || fila >= N) {
+        printf("Numero de fila invalido.\n");
+        return -1; // Indicamos error
+    }
+    return fila;
+}
+
+// RF6: Función para calcular el valor máximo de la fila ingresada
+int calcularMaximo(int N, int matriz[N][N], int fila) {
+    int max = matriz[fila][0];
+    for (int j = 1; j < N; j++) {
+        if (matriz[fila][j] > max) {
+            max = matriz[fila][j];
+        }
+    }
+    return max;
+}
