@@ -13,8 +13,9 @@ typedef struct {
     int cantidad;
 } Producto;
 
-// ----------------- Contraseña -----------------
+// ----------------- Contrasena -----------------
 
+//Funcion para guardar contrasenas
 void guardarContrasena(const char *nuevaContrasena) {
     FILE *file = fopen(ARCHIVO_CONTRASENA, "w");
     if (file) {
@@ -32,6 +33,7 @@ int cargarContrasena(char *buffer) {
     return 1;
 }
 
+//Funcion para cambiar contrasenas
 void cambiarContrasena() {
     char nueva[50], confirmacion[50];
     printf("Ingrese la nueva contrasena: ");
@@ -79,6 +81,7 @@ int verificarContrasena() {
 }
 // ----------------- Validaciones -----------------
 
+//Funcion para impedir entradas invalidas en el precio
 float leerPrecio() {
     char entrada[50];
     float valor;
@@ -95,6 +98,7 @@ float leerPrecio() {
     }
 }
 
+//Funcion para impedir entradas invalidas en la cantidad
 int leerCantidad() {
     char entrada[50];
     int valor;
@@ -111,6 +115,7 @@ int leerCantidad() {
     }
 }
 
+//Funcion para impedir entradas invalidas en las opciones del menu principal
 int leerOpcionMenu() {
     char entrada[10];
     int opcion;
@@ -129,6 +134,7 @@ int leerOpcionMenu() {
 
 // ----------------- Inventario -----------------
 
+//Funcion para buscar un producto con su codigo
 int buscarProducto(Producto inventario[], int cantidad, const char *codigo) {
     for (int i = 0; i < cantidad; i++) {
         if (strcmp(inventario[i].codigo, codigo) == 0) {
@@ -138,6 +144,7 @@ int buscarProducto(Producto inventario[], int cantidad, const char *codigo) {
     return -1;
 }
 
+//Funcion para leer los productos desde el txt
 int cargarInventario(Producto inventario[]) {
     FILE *file = fopen(ARCHIVO, "r");
     if (!file) return 0;
@@ -156,6 +163,7 @@ int cargarInventario(Producto inventario[]) {
     return cantidad;
 }
 
+//Funcion para guardar cambios en los productos del inventario
 void guardarInventario(Producto inventario[], int cantidad) {
     FILE *file = fopen(ARCHIVO, "w");
     if (!file) return;
@@ -173,6 +181,7 @@ void guardarInventario(Producto inventario[], int cantidad) {
 
 // ----------------- Producto -----------------
 
+//Funcion para mostrar un producto
 void mostrarProducto(Producto p) {
     printf("\nCodigo: %s\n", p.codigo);
     printf("Nombre: %s\n", p.nombre);
@@ -180,6 +189,7 @@ void mostrarProducto(Producto p) {
     printf("Cantidad disponible: %d\n", p.cantidad);
 }
 
+//Funcion para guardar un nuevo producto
 void crearProducto(Producto *p, Producto inventario[], int cantidadActual) {
     system("cls");
     while (1) {
@@ -208,6 +218,8 @@ void crearProducto(Producto *p, Producto inventario[], int cantidadActual) {
     getchar();
     system("cls");
 }
+
+//Funcion para buscar un producto usando su codigo
 void buscarProductoPorCodigo(Producto inventario[], int cantidad) {
     system("cls");
     char codigo[20];
@@ -227,8 +239,7 @@ void buscarProductoPorCodigo(Producto inventario[], int cantidad) {
     system("cls");
 }
 
-// ----------------- Eliminar Producto -----------------
-
+//Funcion para eliminar un producto
 void eliminarProducto(Producto inventario[], int *cantidad) {
     system("cls");
     char codigo[20];
@@ -246,7 +257,7 @@ void eliminarProducto(Producto inventario[], int *cantidad) {
     }
 
     char confirmacion;
-    printf("¿Seguro que desea eliminar el producto '%s'? (S/N): ", inventario[index].nombre);
+    printf("Seguro que desea eliminar el producto '%s'? (S/N): ", inventario[index].nombre);
     scanf(" %c", &confirmacion);
     getchar(); // Limpiar buffer
 
@@ -265,7 +276,7 @@ void eliminarProducto(Producto inventario[], int *cantidad) {
     system("cls");
 }
 
-// ----------------- Actualizar Producto -----------------
+//Funcion para actualizar datos de un producto
 
 void actualizarProducto(Producto inventario[], int cantidad) {
     system("cls");
@@ -284,32 +295,81 @@ void actualizarProducto(Producto inventario[], int cantidad) {
     }
 
     char confirmacion;
-    printf("¿Seguro que desea actualizar el producto '%s'? (S/N): ", inventario[index].nombre);
+    printf("Seguro que desea actualizar el producto '%s'? (S/N): ", inventario[index].nombre);
     scanf(" %c", &confirmacion);
     getchar();
 
-    if (confirmacion == 'S' || confirmacion == 's') {
-        printf("Ingrese el nuevo nombre del producto (actual: %s): ", inventario[index].nombre);
-        fgets(inventario[index].nombre, 50, stdin);
-        inventario[index].nombre[strcspn(inventario[index].nombre, "\n")] = '\0';
-
-        printf("Ingrese el nuevo precio del producto (actual: %.2f): ", inventario[index].precio);
-        inventario[index].precio = leerPrecio();
-
-        printf("Ingrese la nueva cantidad disponible (actual: %d): ", inventario[index].cantidad);
-        inventario[index].cantidad = leerCantidad();
-
-        printf("Producto actualizado correctamente.\n");
-    } else {
+    if (confirmacion != 'S' && confirmacion != 's') {
         printf("Actualizacion cancelada.\n");
+        printf("Presione ENTER para continuar...");
+        getchar();
+        system("cls");
+        return;
     }
 
-    printf("Presione ENTER para continuar...");
-    getchar();
+    int opcion;
+    do {
+        system("cls");
+        printf("--- MENU DE ACTUALIZACION ---\n");
+        printf("1. Actualizar nombre\n");
+        printf("2. Actualizar precio\n");
+        printf("3. Actualizar cantidad\n");
+        printf("4. Actualizar todo\n");
+        printf("5. Cancelar\n");
+        printf("Seleccione una opcion: ");
+        scanf("%d", &opcion);
+        getchar();
+
+        switch(opcion) {
+            case 1:
+                printf("Ingrese el nuevo nombre (actual: %s): ", inventario[index].nombre);
+                fgets(inventario[index].nombre, 50, stdin);
+                inventario[index].nombre[strcspn(inventario[index].nombre, "\n")] = '\0';
+                printf("Nombre actualizado correctamente.\n");
+                break;
+
+            case 2:
+                printf("Ingrese el nuevo precio (actual: %.2f): ", inventario[index].precio);
+                inventario[index].precio = leerPrecio();
+                printf("Precio actualizado correctamente.\n");
+                break;
+
+            case 3:
+                printf("Ingrese la nueva cantidad (actual: %d): ", inventario[index].cantidad);
+                inventario[index].cantidad = leerCantidad();
+                printf("Cantidad actualizada correctamente.\n");
+                break;
+
+            case 4:
+                printf("Ingrese el nuevo nombre (actual: %s): ", inventario[index].nombre);
+                fgets(inventario[index].nombre, 50, stdin);
+                inventario[index].nombre[strcspn(inventario[index].nombre, "\n")] = '\0';
+                printf("Ingrese el nuevo precio (actual: %.2f): ", inventario[index].precio);
+                inventario[index].precio = leerPrecio();
+                printf("Ingrese la nueva cantidad (actual: %d): ", inventario[index].cantidad);
+                inventario[index].cantidad = leerCantidad();
+                printf("Producto actualizado completamente.\n");
+                break;
+
+            case 5:
+                printf("Actualizacion cancelada.\n");
+                break;
+
+            default:
+                printf("Opcion invalida.\n");
+        }
+
+        if (opcion >=1 && opcion <=4) {
+            printf("Presione ENTER para continuar...");
+            getchar();
+        }
+
+    } while(opcion < 1 || opcion > 5);
+
     system("cls");
 }
 
-// ----------------- Control de Ventas -----------------
+//Funcion para registrar ventas
 
 void registrarVenta(Producto inventario[], int *cantidad, FILE *historial) {
     char codigo[20];
@@ -329,6 +389,14 @@ void registrarVenta(Producto inventario[], int *cantidad, FILE *historial) {
         return;
     }
 
+    // Mostrar informacion del producto encontrado
+    printf("\n--- INFORMACION DEL PRODUCTO ---\n");
+    printf("Codigo: %s\n", inventario[index].codigo);
+    printf("Nombre: %s\n", inventario[index].nombre);
+    printf("Precio Unitario: $%.2f\n", inventario[index].precio);
+    printf("Cantidad Disponible: %d\n\n", inventario[index].cantidad);
+
+    // Solicitar cantidad a vender
     while (1) {
         printf("Ingrese la cantidad a vender: ");
         cantidadVenta = leerCantidad();
@@ -351,7 +419,7 @@ void registrarVenta(Producto inventario[], int *cantidad, FILE *historial) {
             inventario[index].precio,
             inventario[index].precio * cantidadVenta);
 
-    printf("Venta registrada. Total: $%.2f\n", inventario[index].precio * cantidadVenta);
+    printf("Venta registrada. \nTotal: $%.2f\n", inventario[index].precio * cantidadVenta);
     printf("Presione ENTER para continuar...");
     getchar();
     system("cls");
@@ -360,6 +428,7 @@ void registrarVenta(Producto inventario[], int *cantidad, FILE *historial) {
 // ----------------- Historial de Ventas -----------------
 
 void mostrarHistorialVentas() {
+    system("cls"); // ✅ limpia antes de mostrar el historial
     FILE *file = fopen(ARCHIVO_VENTAS, "r");
     if (!file) {
         printf("No hay ventas registradas aun.\n");
@@ -385,6 +454,8 @@ void mostrarHistorialVentas() {
     getchar();
     system("cls");
 }
+
+//Funcion para mostrar el menu principal
 int main() {
     if (!verificarContrasena()) {
         printf("Contrasena incorrecta. Acceso denegado.\n");
