@@ -13,13 +13,13 @@ typedef struct {
     int cantidad;
 } Producto;
 
-// ----------------- Nueva funcion para evitar entradas vacías y solo espacios -----------------
+//Funcion para evitar entradas vacías y solo espacios
 
-// Funcion auxiliar que verifica si una cadena contiene solo espacios
+// Funcion para verificar si una cadena contiene solo espacios
 int esSoloEspacios(const char *cadena) {
     for (int i = 0; cadena[i] != '\0'; i++) {
         if (cadena[i] != ' ' && cadena[i] != '\t') {
-            return 0; // Tiene al menos un carácter valido
+            return 0;
         }
     }
     return 1; // Solo contiene espacios
