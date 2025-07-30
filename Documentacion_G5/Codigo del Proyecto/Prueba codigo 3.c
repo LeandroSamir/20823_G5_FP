@@ -13,7 +13,17 @@ typedef struct {
     int cantidad;
 } Producto;
 
-//Funcion para evitar entradas vacias
+// ----------------- Nueva funcion para evitar entradas vacías y solo espacios -----------------
+
+// Funcion auxiliar que verifica si una cadena contiene solo espacios
+int esSoloEspacios(const char *cadena) {
+    for (int i = 0; cadena[i] != '\0'; i++) {
+        if (cadena[i] != ' ' && cadena[i] != '\t') {
+            return 0; // Tiene al menos un carácter valido
+        }
+    }
+    return 1; // Solo contiene espacios
+}
 
 void leerCadena(char *buffer, int tamano) {
     while (1) {
@@ -22,14 +32,14 @@ void leerCadena(char *buffer, int tamano) {
 
         // Eliminar espacios al inicio
         char *inicio = buffer;
-        while (*inicio == ' ') inicio++;
+        while (*inicio == ' ' || *inicio == '\t') inicio++;
 
         // Eliminar espacios al final
         char *fin = buffer + strlen(buffer) - 1;
-        while (fin >= inicio && *fin == ' ') *fin-- = '\0';
+        while (fin >= inicio && (*fin == ' ' || *fin == '\t')) *fin-- = '\0';
 
-        if (strlen(inicio) == 0) {
-            printf("Entrada vacia o solo espacios. Ingrese un valor valido: ");
+        if (strlen(inicio) == 0 || esSoloEspacios(inicio)) {
+            printf("Entrada invalida (no se permiten cadenas vacias ni solo espacios). Ingrese un valor valido: ");
         } else {
             if (inicio != buffer) memmove(buffer, inicio, strlen(inicio) + 1);
             break;
@@ -39,6 +49,7 @@ void leerCadena(char *buffer, int tamano) {
 
 // ----------------- Contrasena -----------------
 
+//Funcion para guardar contrasenas
 void guardarContrasena(const char *nuevaContrasena) {
     FILE *file = fopen(ARCHIVO_CONTRASENA, "w");
     if (file) {
@@ -56,6 +67,7 @@ int cargarContrasena(char *buffer) {
     return 1;
 }
 
+//Funcion para cambiar contrasenas
 void cambiarContrasena() {
     char nueva[50], confirmacion[50];
     printf("Ingrese la nueva contrasena: ");
@@ -97,9 +109,9 @@ int verificarContrasena() {
         return 0;
     }
 }
-
 // ----------------- Validaciones -----------------
 
+//Funcion para impedir entradas invalidas en el precio
 float leerPrecio() {
     char entrada[50];
     float valor;
@@ -115,6 +127,7 @@ float leerPrecio() {
     }
 }
 
+//Funcion para impedir entradas invalidas en la cantidad
 int leerCantidad() {
     char entrada[50];
     int valor;
@@ -130,6 +143,7 @@ int leerCantidad() {
     }
 }
 
+//Funcion para impedir entradas invalidas en las opciones del menu principal
 int leerOpcionMenu() {
     char entrada[10];
     int opcion;
@@ -147,6 +161,7 @@ int leerOpcionMenu() {
 
 // ----------------- Inventario -----------------
 
+//Funcion para buscar un producto con su codigo
 int buscarProducto(Producto inventario[], int cantidad, const char *codigo) {
     for (int i = 0; i < cantidad; i++) {
         if (strcmp(inventario[i].codigo, codigo) == 0) {
@@ -156,6 +171,7 @@ int buscarProducto(Producto inventario[], int cantidad, const char *codigo) {
     return -1;
 }
 
+//Funcion para leer los productos desde el txt
 int cargarInventario(Producto inventario[]) {
     FILE *file = fopen(ARCHIVO, "r");
     if (!file) return 0;
@@ -174,6 +190,7 @@ int cargarInventario(Producto inventario[]) {
     return cantidad;
 }
 
+//Funcion para guardar cambios en los productos del inventario
 void guardarInventario(Producto inventario[], int cantidad) {
     FILE *file = fopen(ARCHIVO, "w");
     if (!file) return;
@@ -191,13 +208,13 @@ void guardarInventario(Producto inventario[], int cantidad) {
 
 // ----------------- Producto -----------------
 
+//Funcion para mostrar un producto
 void mostrarProducto(Producto p) {
     printf("\nCodigo: %s\n", p.codigo);
     printf("Nombre: %s\n", p.nombre);
     printf("Precio: $%.2f\n", p.precio);
     printf("Cantidad disponible: %d\n", p.cantidad);
 }
-
 void crearProducto(Producto *p, Producto inventario[], int cantidadActual) {
     system("cls");
     while (1) {
@@ -224,7 +241,6 @@ void crearProducto(Producto *p, Producto inventario[], int cantidadActual) {
     getchar();
     system("cls");
 }
-
 
 void buscarProductoPorCodigo(Producto inventario[], int cantidad) {
     system("cls");
