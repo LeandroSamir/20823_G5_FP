@@ -409,13 +409,30 @@ void registrarVenta(Producto inventario[], int *cantidad, FILE *historial) {
     printf("Cantidad Disponible: %d\n\n", inventario[index].cantidad);
 
     while (1) {
-        printf("Ingrese la cantidad a vender: ");
+        printf("Ingrese la cantidad a vender(0 para cancelar): ");
         cantidadVenta = leerCantidad();
 
-        if (cantidadVenta < 0) {
-            printf("Error: La cantidad debe ser mayor que cero.\n");
+        if (cantidadVenta == 0) {
+            printf("Venta cancelada. No se puede vender 0 unidades.\n");
+            printf("Presione ENTER para continuar...");
+            getchar();
+            system("cls");
+            return;
         } else if (cantidadVenta > inventario[index].cantidad) {
-            printf("Error: No hay suficiente stock disponible.\n");
+            printf("Advertencia: no hay suficiente stock disponible.\n");
+            printf("¿Desea continuar con la venta de todas formas? (S/N): ");
+            char respuesta;
+            scanf(" %c", &respuesta);
+            getchar();
+            if (respuesta != 'S' && respuesta != 's') {
+                printf("Venta cancelada.\n");
+                printf("Presione ENTER para continuar...");
+                getchar();
+                system("cls");
+                return;
+            } else {
+                break;
+            }
         } else {
             break;
         }
@@ -435,6 +452,7 @@ void registrarVenta(Producto inventario[], int *cantidad, FILE *historial) {
     getchar();
     system("cls");
 }
+
 
 void mostrarHistorialVentas() {
     system("cls");
@@ -577,5 +595,3 @@ int main() {
     }
 
     fclose(historial);
-    return 0;
-}
