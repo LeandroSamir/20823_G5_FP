@@ -412,7 +412,7 @@ void registrarVenta(Producto inventario[], int *cantidad, FILE *historial) {
         printf("Ingrese la cantidad a vender: ");
         cantidadVenta = leerCantidad();
 
-        if (cantidadVenta <= 0) {
+        if (cantidadVenta < 0) {
             printf("Error: La cantidad debe ser mayor que cero.\n");
         } else if (cantidadVenta > inventario[index].cantidad) {
             printf("Error: No hay suficiente stock disponible.\n");
