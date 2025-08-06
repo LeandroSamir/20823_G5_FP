@@ -595,3 +595,5 @@ int main() {
     }
 
     fclose(historial);
+    return 0;
+}
