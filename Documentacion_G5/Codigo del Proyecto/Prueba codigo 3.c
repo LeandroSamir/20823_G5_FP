@@ -6,6 +6,30 @@
 #define ARCHIVO_CONTRASENA "contrasena.txt"
 #define ARCHIVO_VENTAS "ventas.txt"
 
+// Colores ANSI
+#define ROJO   "\x1b[31m"
+#define VERDE  "\x1b[32m"
+#define RESET  "\x1b[0m"
+
+// Funciones seguras para imprimir con color
+#include <stdarg.h>
+void printf_ok(const char *fmt, ...) {
+    va_list ap;
+    va_start(ap, fmt);
+    printf(VERDE);
+    vprintf(fmt, ap);
+    printf(RESET);
+    va_end(ap);
+}
+void printf_err(const char *fmt, ...) {
+    va_list ap;
+    va_start(ap, fmt);
+    printf(ROJO);
+    vprintf(fmt, ap);
+    printf(RESET);
+    va_end(ap);
+}
+
 typedef struct {
     char codigo[20];
     char nombre[50];
@@ -39,7 +63,7 @@ void leerCadena(char *buffer, int tamano) {
         while (fin >= inicio && (*fin == ' ' || *fin == '\t')) *fin-- = '\0';
 
         if (strlen(inicio) == 0 || esSoloEspacios(inicio)) {
-            printf("Entrada invalida (no se permiten cadenas vacias ni solo espacios). Ingrese un valor valido: ");
+            printf_err("Entrada invalida (no se permiten cadenas vacias ni solo espacios). Ingrese un valor valido: ");
         } else {
             if (inicio != buffer) memmove(buffer, inicio, strlen(inicio) + 1);
             break;
@@ -78,9 +102,9 @@ void cambiarContrasena() {
 
     if (strcmp(nueva, confirmacion) == 0) {
         guardarContrasena(nueva);
-        printf("Contrasena cambiada correctamente.\n");
+        printf_ok("Contrasena cambiada correctamente.\n");
     } else {
-        printf("Las contrasenas no coinciden. No se hizo el cambio.\n");
+        printf_err("Las contrasenas no coinciden. No se hizo el cambio.\n");
     }
 
     printf("Presione ENTER para continuar...");
@@ -96,7 +120,7 @@ int verificarContrasena() {
         printf("Cree una nueva contrasena: ");
         leerCadena(guardada, 50);
         guardarContrasena(guardada);
-        printf("Contrasena guardada exitosamente.\n");
+        printf_ok("Contrasena guardada exitosamente.\n");
     }
 
     printf("Ingrese la contrasena: ");
@@ -120,7 +144,7 @@ float leerPrecio() {
         leerCadena(entrada, sizeof(entrada));
         valor = strtof(entrada, &endptr);
         if (*endptr != '\0' || valor <= 0) {
-            printf("Entrada invalida. Ingrese un precio mayor que 0: ");
+            printf_err("Entrada invalida. Ingrese un precio mayor que 0: ");
         } else {
             return valor;
         }
@@ -136,7 +160,7 @@ int leerCantidad() {
         leerCadena(entrada, sizeof(entrada));
         valor = strtol(entrada, &endptr, 10);
         if (*endptr != '\0' || valor < 0) {
-            printf("Entrada invalida. Ingrese una cantidad entera valida: ");
+            printf_err("Entrada invalida. Ingrese una cantidad entera valida: ");
         } else {
             return valor;
         }
@@ -152,7 +176,7 @@ int leerOpcionMenu() {
         leerCadena(entrada, sizeof(entrada));
         opcion = strtol(entrada, &endptr, 10);
         if (*endptr != '\0' || opcion < 1 || opcion > 9) {
-            printf("Opcion invalida. Ingrese un numero entre 1 y 9: ");
+            printf_err("Opcion invalida. Ingrese un numero entre 1 y 9: ");
         } else {
             return opcion;
         }
@@ -222,7 +246,7 @@ void crearProducto(Producto *p, Producto inventario[], int cantidadActual) {
         leerCadena(p->codigo, 20);
 
         if (buscarProducto(inventario, cantidadActual, p->codigo) != -1) {
-            printf("Error: El codigo '%s' ya esta en uso. Intente con otro.\n", p->codigo);
+            printf_err("Error: El codigo '%s' ya esta en uso. Intente con otro.\n", p->codigo);
         } else {
             break;
         }
@@ -237,7 +261,7 @@ void crearProducto(Producto *p, Producto inventario[], int cantidadActual) {
     printf("Ingrese la cantidad disponible: ");
     p->cantidad = leerCantidad();
 
-    printf("Producto agregado correctamente. Presione ENTER para continuar...");
+    printf_ok("Producto agregado correctamente. Presione ENTER para continuar...");
     getchar();
     system("cls");
 }
@@ -250,7 +274,7 @@ void buscarProductoPorCodigo(Producto inventario[], int cantidad) {
 
     int index = buscarProducto(inventario, cantidad, codigo);
     if (index == -1) {
-        printf("Producto no encontrado.\n");
+        printf_err("Producto no encontrado.\n");
     } else {
         mostrarProducto(inventario[index]);
     }
@@ -268,7 +292,7 @@ void eliminarProducto(Producto inventario[], int *cantidad) {
 
     int index = buscarProducto(inventario, *cantidad, codigo);
     if (index == -1) {
-        printf("Producto no encontrado.\n");
+        printf_err("Producto no encontrado.\n");
         printf("Presione ENTER para continuar...");
         getchar();
         system("cls");
@@ -285,9 +309,9 @@ void eliminarProducto(Producto inventario[], int *cantidad) {
             inventario[i] = inventario[i + 1];
         }
         (*cantidad)--;
-        printf("Producto eliminado correctamente.\n");
+        printf_ok("Producto eliminado correctamente.\n");
     } else {
-        printf("Eliminacion cancelada.\n");
+        printf_err("Eliminacion cancelada.\n");
     }
 
     printf("Presione ENTER para continuar...");
@@ -303,7 +327,7 @@ void actualizarProducto(Producto inventario[], int cantidad) {
 
     int index = buscarProducto(inventario, cantidad, codigo);
     if (index == -1) {
-        printf("Producto no encontrado.\n");
+        printf_err("Producto no encontrado.\n");
         printf("Presione ENTER para continuar...");
         getchar();
         system("cls");
@@ -316,7 +340,7 @@ void actualizarProducto(Producto inventario[], int cantidad) {
     getchar();
 
     if (confirmacion != 'S' && confirmacion != 's') {
-        printf("Actualizacion cancelada.\n");
+        printf_err("Actualizacion cancelada.\n");
         printf("Presione ENTER para continuar...");
         getchar();
         system("cls");
@@ -340,19 +364,19 @@ void actualizarProducto(Producto inventario[], int cantidad) {
             case 1:
                 printf("Ingrese el nuevo nombre (actual: %s): ", inventario[index].nombre);
                 leerCadena(inventario[index].nombre, 50);
-                printf("Nombre actualizado correctamente.\n");
+                printf_ok("Nombre actualizado correctamente.\n");
                 break;
 
             case 2:
                 printf("Ingrese el nuevo precio (actual: %.2f): ", inventario[index].precio);
                 inventario[index].precio = leerPrecio();
-                printf("Precio actualizado correctamente.\n");
+                printf_ok("Precio actualizado correctamente.\n");
                 break;
 
             case 3:
                 printf("Ingrese la nueva cantidad (actual: %d): ", inventario[index].cantidad);
                 inventario[index].cantidad = leerCantidad();
-                printf("Cantidad actualizada correctamente.\n");
+                printf_ok("Cantidad actualizada correctamente.\n");
                 break;
 
             case 4:
@@ -362,15 +386,15 @@ void actualizarProducto(Producto inventario[], int cantidad) {
                 inventario[index].precio = leerPrecio();
                 printf("Ingrese la nueva cantidad (actual: %d): ", inventario[index].cantidad);
                 inventario[index].cantidad = leerCantidad();
-                printf("Producto actualizado completamente.\n");
+                printf_ok("Producto actualizado completamente.\n");
                 break;
 
             case 5:
-                printf("Actualizacion cancelada.\n");
+                printf_err("Actualizacion cancelada.\n");
                 break;
 
             default:
-                printf("Opcion invalida.\n");
+                printf_err("Opcion invalida.\n");
         }
 
         if (opcion >=1 && opcion <=4) {
@@ -395,7 +419,7 @@ void registrarVenta(Producto inventario[], int *cantidad, FILE *historial) {
 
     int index = buscarProducto(inventario, *cantidad, codigo);
     if (index == -1) {
-        printf("Producto no encontrado.\n");
+        printf_err("Producto no encontrado.\n");
         printf("Presione ENTER para continuar...");
         getchar();
         system("cls");
@@ -409,35 +433,23 @@ void registrarVenta(Producto inventario[], int *cantidad, FILE *historial) {
     printf("Cantidad Disponible: %d\n\n", inventario[index].cantidad);
 
     while (1) {
-        printf("Ingrese la cantidad a vender(0 para cancelar): ");
+        printf("Ingrese la cantidad a vender (0 para cancelar): ");
         cantidadVenta = leerCantidad();
 
         if (cantidadVenta == 0) {
-            printf("Venta cancelada. No se puede vender 0 unidades.\n");
+            printf_err("Venta cancelada.\n");
             printf("Presione ENTER para continuar...");
             getchar();
             system("cls");
             return;
-        } else if (cantidadVenta > inventario[index].cantidad) {
-            printf("Advertencia: no hay suficiente stock disponible.\n");
-            printf("¿Desea continuar con la venta de todas formas? (S/N): ");
-            char respuesta;
-            scanf(" %c", &respuesta);
-            getchar();
-            if (respuesta != 'S' && respuesta != 's') {
-                printf("Venta cancelada.\n");
-                printf("Presione ENTER para continuar...");
-                getchar();
-                system("cls");
-                return;
-            } else {
-                break;
-            }
+        }
+        if (cantidadVenta > inventario[index].cantidad) {
+            printf_err("Error: No hay suficiente stock disponible (%d unidades).\n", inventario[index].cantidad);
+            printf("Ingrese una cantidad menor o igual al stock disponible.\n");
         } else {
-            break;
+            break; // cantidad válida
         }
     }
-
     inventario[index].cantidad -= cantidadVenta;
 
     fprintf(historial, "%s|%s|%d|%.2f|%.2f\n",
@@ -447,7 +459,7 @@ void registrarVenta(Producto inventario[], int *cantidad, FILE *historial) {
             inventario[index].precio,
             inventario[index].precio * cantidadVenta);
 
-    printf("Venta registrada. \nTotal: $%.2f\n", inventario[index].precio * cantidadVenta);
+    printf_ok("Venta registrada. \nTotal: $%.2f\n", inventario[index].precio * cantidadVenta);
     printf("Presione ENTER para continuar...");
     getchar();
     system("cls");
@@ -458,7 +470,7 @@ void mostrarHistorialVentas() {
     system("cls");
     FILE *file = fopen(ARCHIVO_VENTAS, "r");
     if (!file) {
-        printf("No hay ventas registradas aun.\n");
+        printf_ok("No hay ventas registradas aun.\n");
         printf("Presione ENTER para continuar...");
         getchar();
         system("cls");
@@ -486,7 +498,7 @@ void mostrarHistorialVentas() {
 
 int main() {
     if (!verificarContrasena()) {
-        printf("Contrasena incorrecta. Acceso denegado.\n");
+        printf_err("Contrasena incorrecta. Acceso denegado.\n");
         return 1;
     }
 
@@ -495,7 +507,7 @@ int main() {
 
     FILE *historial = fopen(ARCHIVO_VENTAS, "a");
     if (!historial) {
-        printf("Error al abrir el archivo de historial de ventas.\n");
+        printf_err("Error al abrir el archivo de historial de ventas.\n");
         return 1;
     }
 
@@ -518,7 +530,7 @@ int main() {
         switch (opcion) {
             case 1:
                 if (cantidad >= 100) {
-                    printf("El inventario esta lleno. No se pueden agregar mas productos.\n");
+                    printf_err("El inventario esta lleno. No se pueden agregar mas productos.\n");
                     printf("Presione ENTER para continuar...");
                     getchar();
                 } else {
@@ -535,7 +547,7 @@ int main() {
             case 3:
                 system("cls");
                 if (cantidad == 0) {
-                    printf("No hay productos registrados aun.\n");
+                    printf_err("No hay productos registrados aun.\n");
                 } else {
                     for (int i = 0; i < cantidad; i++) {
                         mostrarProducto(inventario[i]);
@@ -549,7 +561,7 @@ int main() {
             case 4:
                 if (cantidad == 0) {
                     system("cls");
-                    printf("No hay productos para eliminar.\n");
+                    printf_err("No hay productos para eliminar.\n");
                     printf("Presione ENTER para continuar...");
                     getchar();
                 } else {
@@ -561,7 +573,7 @@ int main() {
             case 5:
                 if (cantidad == 0) {
                     system("cls");
-                    printf("No hay productos para actualizar.\n");
+                    printf_err("No hay productos para actualizar.\n");
                     printf("Presione ENTER para continuar...");
                     getchar();
                 } else {
